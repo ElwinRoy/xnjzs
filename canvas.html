@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EverGreen Transport</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4; 
+    }
+    header {
+      background-color:#27370c;
+      color: white; /* White text color */
+      padding: 10px 0;
+      text-align: center;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: beige; 
+      border-radius: 10px; 
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    }
+    h1, h2 {
+      text-align: center;
+      color: #007bff;
+    }
+
+    header h1 {
+      color: white; 
+    }
+    #map, #campusMap {
+      width: 100%;
+      height: 400px; 
+      margin-bottom: 20px;
+    }
+    .route-title {
+      color: #007bff; 
+    }
+    #fareCalculator, #education {
+      background-color: #f9f9f9; 
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+    }
+    form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+    form label {
+      margin-right: 10px;
+      color: #555; 
+    }
+    form input[type="text"], form input[type="submit"] {
+      padding: 5px;
+      border: 1px solid #ccc;
+    }
+    form input[type="submit"] {
+      padding: 5px 20px;
+      background-color: #007bff; 
+      color: #fff; 
+      border: none;
+      cursor: pointer;
+    }
+    #result {
+      text-align: center;
+      margin-top: 20px;
+      color: #555; 
+    }
+    
+    #circleCanvas {
+      background-color: #f9f9f9; 
+      margin-top: 20px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 50%; 
+    }
+
+    /* Animation for bus */
+    @keyframes moveBus {
+      0% { transform: translateX(-200px); }
+      100% { transform: translateX(800px); }
+    }
+
+    #bus {
+      animation: moveBus 5s linear infinite;
+    }
+    footer {
+      background-color: #27370c;
+      color: #fff;
+      text-align: center;
+      padding: 15px 0;
+    }
+
+    .footer-icons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .footer-icons a {
+      margin: 0 10px;
+    }
+
+    .footer-icons i {
+      font-size: 24px;
+      color: #f0c040;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>EverGreen Transport</h1>
+  </header>
+  <div class="container">
+    <div class="route-card">
+      <center>
+        <!-- Embed Google Maps iframe for route display -->
+        <iframe class="route-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15554.399506308915!2d77.59703214371652!3d12.93341877308795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae15b277a93807%3A0x88518f37b39dabd0!2sChrist%20University!5e0!3m2!1sen!2sin!4v1707278498452!5m2!1sen!2sin" width="750" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <h2 class="route-title">Map</h2>
+      </center>
+    </div>
+
+    <section id="fareCalculator">
+      <h2>Fare Calculator</h2>
+      <form id="fareForm">
+        <label for="startLocation">Start Location:</label>
+        <input type="text" id="startLocation" name="startLocation" placeholder="Enter start location">
+        <label for="endLocation">End Location:</label>
+        <input type="text" id="endLocation" name="endLocation" placeholder="Enter end location">
+        <input type="submit" value="Calculate Fare">
+      </form>
+      <div id="result"></div>
+    </section>
+
+    <section id="education">
+      <h2>Educational Content</h2>
+      <!-- Educational content about sustainable transportation practices -->
+      <p>Implementing sustainable transportation practices, communities can achieve multiple benefits, including reduced greenhouse gas emissions, improved air quality, enhanced mobility, and healthier and more livable cities.</p>
+    </section>
+    
+    <!-- Canvas Element for Circle -->
+    <canvas id="circleCanvas" width="400" height="400"></canvas>
+  </div>
+
+  <script>
+    // Drawing the circle and bus on Canvas
+    const canvas = document.getElementById('circleCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Draw circle
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const radius = 150;
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+    ctx.fillStyle = '#e6e6e6'; // Light grey color
+    ctx.fill();
+    ctx.closePath();
+
+    // Draw bus body
+    ctx.fillStyle = '#ffd700'; // Yellow color
+    ctx.fillRect(centerX - 100, centerY - 40, 200, 80);
+
+    // Draw windows
+    ctx.fillStyle = '#ffffff'; // White color
+    ctx.fillRect(centerX - 90, centerY - 20, 50, 20);
+    ctx.fillRect(centerX + 40, centerY - 20, 50, 20);
+
+    // Draw wheels
+    ctx.fillStyle = '#000000'; // Black color
+    ctx.beginPath();
+    ctx.arc(centerX - 70, centerY + 30, 15, 0, Math.PI * 2);
+    ctx.arc(centerX + 70, centerY + 30, 15, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Function to calculate fare based on distance
+    function calculateFare(startLocation, endLocation) {
+      // Here you would implement your fare calculation logic
+      // For example, you can calculate based on distance
+      // This is just a placeholder calculation
+      const distance = Math.abs(Math.random() * 100); // Random distance for demonstration
+      const fare = distance * 1.5; // Assuming fare is ₹0.10 per unit distance
+      return fare.toFixed(2);
+    }
+
+    // Event listener for form submission
+    document.getElementById('fareForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      // Get start and end locations from form
+      const startLocation = document.getElementById('startLocation').value;
+      const endLocation = document.getElementById('endLocation').value;
+
+      // Calculate fare
+      const fare = calculateFare(startLocation, endLocation);
+
+      // Display result with Indian rupee symbol
+      document.getElementById('result').innerHTML = `Approximate Fare: ₹${fare}`;
+    });
+  </script>
+
+  <footer>
+    &copy; 2023 Evergreen University. All rights reserved.
+    <div class="footer-icons">
+      <a href="https://www.facebook.com/"><i class="fa-brands fa-facebook"></i></a>
+      <a href="https://twitter.com/"><i class="fa-brands fa-twitter"></i></a>
+      <a href="https://www.instagram.com/"><i class="fa-brands fa-instagram"></i></a>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="couponApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form-v4 by Colorlib</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Include Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Your custom CSS -->
+    <style>
+        body {
+            margin: 0;
+            background-color: aliceblue;
+        }
+        .page-content {
+            width: 100%;
+            margin: 0 auto;
+            background:#666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .form-v4-content {
+            background: #fff;
+            width: 850px;
+            border-radius: 10px;
+            box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
+            margin: 175px 0;
+            display: flex;
+            font-family: 'Open Sans', sans-serif;
+        }
+        .form-v4-content h2 {
+            font-weight: 700;
+            font-size: 30px;
+            padding: 6px 0 0;
+            margin-bottom: 34px;
+            color:darkgrey;
+        }
+        .form-v4-content .form-left {
+            background: #27370c;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            padding: 20px 40px;
+            width: 100%;
+            color: #fff;
+        }
+        .form-v4-content .form-left p {
+            font-size: 15px;
+            font-weight: 300;
+            line-height: 1.5;
+            margin: 0;
+        }
+        .form-v4-content .form-left span {
+            font-weight: 700;
+        }
+        .form-v4-content .form-left .account {
+            background: #fff;
+            border-top-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            width: 180px;
+            border: 1px solid black;
+            margin: 15px 0 50px 0px;
+            cursor: pointer;
+            color: #333;
+            font-weight: 700;
+            font-size: 15px;
+            appearance: unset;
+            outline: none;
+        }
+        .form-v4-content .form-detail {
+            padding: 20px 40px;
+            width: 100%;
+        }
+        .form-v4-content .form-detail .form-group {
+            display: flex;
+            margin: 0 -8px;
+        }
+        .form-v4-content .form-detail .form-row.form-row-1 {
+            width: 50%;
+            padding: 0 8px;
+        }
+        .form-v4-content .form-detail label {
+            font-weight: 600;
+            font-size: 15px;
+            color: #666;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .form-v4-content .form-detail input {
+            width: 100%;
+            padding: 11.5px 15px;
+            border: 1px solid #e5e5e5;
+            border-top-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            appearance: unset;
+            outline: none;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 15px;
+            color: #333;
+            box-sizing: border-box;
+            border: 1px solid black;
+        }
+        .form-v4-content .form-detail .register {
+            background: #27370c;
+            border-top-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            width: 130px;
+            border: none;
+            margin: 6px 0 50px 0px;
+            cursor: pointer;
+            color: #fff;
+            font-weight: 700;
+            font-size: 15px;
+        }
+        .form-v4-content .form-detail .register:hover {
+            background: #27370c;
+        }
+        /* Error message styles */
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        /* Clearfix */
+        .form-v4-content .form-left::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+<body class="form-v4" ng-app="couponApp" ng-controller="CouponController">
+    <div class="page-content">
+        <div class="form-v4-content">
+            <div class="form-left">
+                <h2>INFORMATION</h2>
+                <p class="text-1">A transport coupon offered typically provides students or faculty with subsidized or discounted access to public transportation services for a defined period, usually monthly or yearly. These coupons are often part of a university's efforts to promote sustainable transportation options, reduce traffic congestion, and support the financial needs of its community members.</p>
+                <div class="form-left-last">
+                    <input type="submit" name="account" class="account" value="Have A Good Journey" ng-mouseenter="showTooltip = true" ng-mouseleave="showTooltip = false">
+                    <div ng-if="showTooltip">Click here to learn more!</div>
+                </div>
+            </div>
+            <form class="form-detail" action="coupon1.php" method="post" id="myform" ng-submit="validateForm()">
+                <h2>COUPON FORM</h2>
+                <div class="form-group">
+                    <div class="form-row form-row-1">
+                        <label for="studentID">Student ID</label>
+                        <input type="text" name="studentID" id="studentID" class="input-text" ng-model="studentID" required>
+                        <p class="error" id="idError">{{ idError }}</p>
+                    </div>
+                    <div class="form-row form-row-1">
+                        <label for="studentName">Student Name</label>
+                        <input type="text" name="studentName" id="studentName" class="input-text" ng-model="studentName" required>
+                        <p class="error" id="nameError">{{ nameError }}</p>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label for="studentEmail">Email</label>
+                    <input type="email" name="studentEmail" id="studentEmail" class="input-text" ng-model="studentEmail" required>
+                    <p class="error" id="emailError">{{ emailError }}</p>
+                </div>
+                <div class="form-group">
+                    <div class="form-row form-row-1 ">
+                        <label for="studentPhone">Phone Number</label>
+                        <input type="text" name="studentPhone" id="studentPhone" class="input-text" ng-model="studentPhone" required>
+                        <p class="error" id="phoneError">{{ phoneError }}</p>
+                    </div>
+                    <div class="form-row form-row-1">
+                        <label for="couponType">Coupon Type</label>
+                        <select name="couponType" id="couponType" class="input-text" ng-model="couponType" ng-change="updatePrice()" required>
+                            <option value="monthly">Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label for="couponPrice">Coupon Price</label>
+                    <input type="text" name="couponPrice" id="couponPrice" class="input-text" readonly ng-model="couponPrice | currency">
+                </div>
+                <div class="form-row-last">
+                    <input type="submit" name="register" class="register" value="Get Coupon">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <script>
+        angular.module('couponApp', [])
+            .controller('CouponController', function($scope) {
+                $scope.updatePrice = function() {
+                    var couponType = $scope.couponType;
+                    if (couponType === 'monthly') {
+                        $scope.couponPrice = 1500.00;
+                    } else if (couponType === 'yearly') {
+                        $scope.couponPrice = 12000.00;
+                    }
+                };
+
+                $scope.validateForm = function() {
+                    $scope.idError = '';
+                    $scope.nameError = '';
+                    $scope.emailError = '';
+                    $scope.phoneError = '';
+
+                    var isValid = true;
+
+                    if (!/^\d{7}$/.test($scope.studentID)) {
+                        $scope.idError = "Please enter a valid student ID (exactly 7 digits)";
+                        isValid = false;
+                    }
+
+                    if (!/^[A-Za-z\s]+$/.test($scope.studentName)) {
+                        $scope.nameError = "Please enter a valid name";
+                        isValid = false;
+                    }
+
+                    if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test($scope.studentEmail)) {
+                        $scope.emailError = "Please enter a valid email address";
+                        isValid = false;
+                    }
+
+                    if (!/^\d{10}$/.test($scope.studentPhone)) {
+                        $scope.phoneError = "Please enter a valid 10-digit phone number";
+                        isValid = false;
+                    }
+
+                    return isValid;
+                };
+            });
+    </script>
+</body>
+</html>
